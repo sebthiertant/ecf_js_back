@@ -52,18 +52,34 @@ app.post("/users", (request, response) => {
 	}
 });
 
+// Editing User route
+app.patch("/users/:id", (request, response) => {
+	const id = parseInt(request.params.id);
+	let user = users.find((user) => user.id === id);
+
+	(user.firstName = request.body.firstName),
+		(user.lastName = request.body.lastName),
+		(user.photoURL = request.body.photoURL),
+		(user.job = request.body.job),
+		(user.company = request.body.company),
+		(user.address = request.body.address),
+		(user.city = request.body.city),
+		(user.country = request.body.country),
+		(user.email = request.body.email),
+		(user.phone = request.body.phone);
+
+	response.status(200).json(users);
+	console.log(`User with id : ${id} edited with success`);
+});
+
 // Delete user route
 
 app.delete("/users/:id", (request, response) => {
 	const id = parseInt(request.params.id);
-	console.log(id);
 	let user = users.find((user) => user.id === id);
-
-	console.log(user);
 	users.splice(users.indexOf(user), 1);
 
 	response.status(200).json(users);
-
 	console.log(`User with id : ${id} deleted with success`);
 });
 
